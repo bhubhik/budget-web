@@ -1,47 +1,75 @@
 'use client';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-interface Task {
+interface Expense {
   id: number;
-  title: string;
-  completed: boolean;
+  description: string;
+  type: string;
+  amount: number;
 }
 
 export default function Home() {
-  const [tasks, setTasks] = useState<Task[] | undefined>();
+  const [description, setDescription] = useState('');
+  const [type, setType] = useState('');
+  const [amount, setAmount] = useState(0);
 
-  useEffect(() => {
-    axios
-      .get('http://localhost:3001/tasks/')
-      .then((res) => {
-        setTasks(res.data);
-      })
-      .catch((e) => console.log(e.message));
-  }, []);
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    if (!description || !amount || !type) {
+      alert('Please fill up all the fields.');
+      return;
+    }
+
+    const expense = { description, type, amount };
+
+    try {
+      const response = await axios.post(
+        'http://localhost:3001/expense',
+        expense
+      );
+      console.log('Expense added:', response.data);
+      setDescription('');
+      setAmount(0);
+      setType('');
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
 
   return (
     <main className='flex min-h-screen flex-col items-center justify-center'>
       <h1>Finance Tracker</h1>
       <div className='p-8'>
-        <input
-          placeholder='Add your tasks'
-          className='p-4 rounded-md'
-          type='text'
-        />
-        <button className='bg-slate-300 p-4 ml-4 rounded-md text-blue-500'>
-          Add
-        </button>
-      </div>
-      <div className='container bg-slate-50 h-96 w-96'>
-        <ul>
-          {tasks &&
-            tasks.map((task, idx) => (
-              <li className='text-black' key={idx}>
-                {task.title}
-              </li>
-            ))}
-        </ul>
+        <form onSubmit={handleSubmit} className='text-black'>
+          <input
+            placeholder='Your expense description'
+            className='p-4 rounded-md'
+            type='text'
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <input
+            placeholder='Your expense type'
+            className='p-4 rounded-md'
+            type='text'
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+          />
+          <input
+            placeholder='Your expense amount'
+            className='p-4 rounded-md'
+            type='number'
+            value={amount}
+            onChange={(e) => setAmount(parseFloat(e.target.value))}
+          />
+          <button
+            className='bg-slate-300 p-4 ml-4 rounded-md text-blue-500'
+            type='submit'
+          >
+            Add
+          </button>
+        </form>
       </div>
     </main>
   );
