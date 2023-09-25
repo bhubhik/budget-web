@@ -40,8 +40,12 @@ export default function Home() {
   return (
     <main className='flex min-h-screen flex-col items-center justify-center'>
       <h1>Finance Tracker</h1>
-      <div className='p-8'>
-        <form onSubmit={handleSubmit} className='text-black'>
+      <div className='p-8 '>
+        <h2 className='mb-4'>Add new Expense</h2>
+        <form
+          onSubmit={handleSubmit}
+          className='text-black flex flex-col gap-4'
+        >
           <input
             placeholder='Your expense description'
             className='p-4 rounded-md'
@@ -64,7 +68,7 @@ export default function Home() {
             onChange={(e) => setAmount(parseFloat(e.target.value))}
           />
           <button
-            className='bg-slate-300 p-4 ml-4 rounded-md text-blue-500'
+            className='bg-slate-300 p-4 rounded-md text-blue-500 font-bold'
             type='submit'
           >
             Add
