@@ -7,6 +7,7 @@ interface Entry {
   description: string;
   type: string;
   amount: number;
+  entryType: 'expense' | 'income';
 }
 
 export default function AddEntry() {
@@ -21,13 +22,10 @@ export default function AddEntry() {
       alert('Please fill up all the fields.');
       return;
     }
-    const entry: Entry = { description, type, amount };
+    const entry: Entry = { description, type, amount, entryType };
 
     try {
-      const response = await axios.post(
-        `http://localhost:3001/${entryType}`,
-        entry
-      );
+      const response = await axios.post(`http://localhost:3001/entry`, entry);
       console.log('Expense added:', response.data);
       setDescription('');
       setAmount(0);
