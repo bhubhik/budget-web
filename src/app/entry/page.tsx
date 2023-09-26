@@ -37,6 +37,7 @@ export default function AddEntry() {
 
   return (
     <div className='p-8 '>
+      <h1 className='mb-4'>Add your entry:</h1>
       <form onSubmit={handleSubmit} className='text-black flex flex-col gap-4'>
         <input
           placeholder='Your description'
