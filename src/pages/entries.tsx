@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import '../styles/globals.css';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import EntryItem from '@/components/EntryItem';
 
 export default function Page() {
   const router = useRouter();
@@ -25,6 +26,8 @@ export default function Page() {
     <main className='flex min-h-screen flex-col items-center justify-center'>
       <h1>{type === 'expenses' && 'My Expenses'}</h1>
       <h1>{type === 'income' && 'My Income'}</h1>
+      {entries &&
+        entries.map((entry, idx) => <EntryItem key={idx} entry={entry} />)}
     </main>
   );
 }
