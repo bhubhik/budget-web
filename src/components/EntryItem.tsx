@@ -14,8 +14,7 @@ export default function EntryItem({ entry }: EntryItemProps) {
           </h2>
           <p className='text-gray-600 mb-2'>{entry.type}</p>
         </div>
-
-        <p className='text-2xl font-bold text-indigo-600'>${entry.amount}</p>
+        <p className='text-2xl font-bold text-green-600'>${entry.amount}</p>
       </div>
     </div>
   );
