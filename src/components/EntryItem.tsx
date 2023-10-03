@@ -3,11 +3,12 @@ import { MdDeleteForever } from 'react-icons/md';
 
 interface EntryItemProps {
   entry: Entry;
+  onDelete: (id: number) => void;
 }
 
-export default function EntryItem({ entry }: EntryItemProps) {
-  const handleDelete = () => {
-    console.log('delete this item');
+export default function EntryItem({ entry, onDelete }: EntryItemProps) {
+  const handleDelete = (id: number) => {
+    onDelete(id);
   };
 
   return (
@@ -21,7 +22,7 @@ export default function EntryItem({ entry }: EntryItemProps) {
         </div>
         <div>
           <p className='text-2xl font-bold text-green-600'>${entry.amount}</p>
-          <button onClick={handleDelete}>
+          <button onClick={() => handleDelete(entry.id)}>
             <MdDeleteForever className='text-red-500 text-2xl mt-2' />
           </button>
         </div>

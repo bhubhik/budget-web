@@ -3,11 +3,12 @@ import '../styles/globals.css';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import EntryItem from '@/components/EntryItem';
+import { Entry } from '@/types';
 
 export default function Page() {
   const router = useRouter();
   const { type } = router.query;
-  const [entries, setEntries] = useState([]);
+  const [entries, setEntries] = useState<Entry[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -23,6 +24,16 @@ export default function Page() {
     fetchData();
   }, [type]);
 
+  const handleDeleteEntry = async (id: number) => {
+    await axios
+      .delete(`http://localhost:3001/entries/${id}`)
+      .then(() => {
+        const updatedEntries = entries.filter((entry) => entry.id !== id);
+        setEntries(updatedEntries);
+      })
+      .catch((e) => console.error(e.message));
+  };
+
   return (
     <main className='flex min-h-screen flex-col items-center justify-center'>
       <h1 className='text-4xl text-yellow-400 mb-6'>
@@ -32,7 +43,9 @@ export default function Page() {
         {type === 'income' && 'My Income'}
       </h1>
       {entries &&
-        entries.map((entry, idx) => <EntryItem key={idx} entry={entry} />)}
+        entries.map((entry, idx) => (
+          <EntryItem key={idx} entry={entry} onDelete={handleDeleteEntry} />
+        ))}
     </main>
   );
 }
