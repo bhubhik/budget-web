@@ -26,7 +26,7 @@ export default function Page() {
 
   const handleDeleteEntry = async (id: number) => {
     await axios
-      .delete(`http://localhost:3001/entries/${id}`)
+      .delete(`http://localhost:3001/entries/${type}/${id}`)
       .then(() => {
         const updatedEntries = entries.filter((entry) => entry.id !== id);
         setEntries(updatedEntries);

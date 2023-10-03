@@ -7,14 +7,14 @@ interface Entry {
   description: string;
   type: string;
   amount: number;
-  entryType: 'expense' | 'income';
+  entryType: 'expenses' | 'income';
 }
 
 export default function AddEntry() {
   const [description, setDescription] = useState('');
   const [type, setType] = useState('');
   const [amount, setAmount] = useState(0);
-  const [entryType, setEntryType] = useState<'expense' | 'income'>('expense');
+  const [entryType, setEntryType] = useState<'expenses' | 'income'>('expenses');
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -64,7 +64,7 @@ export default function AddEntry() {
           <button
             name='expense'
             className='border-2 border-yellow-500 p-4 rounded-md text-white hover:bg-yellow-500'
-            onClick={() => setEntryType('expense')}
+            onClick={() => setEntryType('expenses')}
           >
             EXPENSE
           </button>
