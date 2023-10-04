@@ -38,14 +38,24 @@ export default function Page() {
     <main className='flex min-h-screen flex-col items-center justify-center'>
       <h1 className='text-4xl text-yellow-400 mb-6'>
         {type === 'expenses' && 'My Expenses'}
-      </h1>
-      <h1 className='text-4xl text-yellow-400 mb-6'>
         {type === 'income' && 'My Income'}
       </h1>
-      {entries &&
-        entries.map((entry, idx) => (
-          <EntryItem key={idx} entry={entry} onDelete={handleDeleteEntry} />
-        ))}
+      <table className='border-collapse w-96'>
+        <thead>
+          <tr>
+            <th className='p-3 border text-left'>Name</th>
+            <th className='p-3 border text-left'>Type</th>
+            <th className='p-3 border text-left'>Amount</th>
+            <th className='p-3 border'></th>
+          </tr>
+        </thead>
+        <tbody className='border'>
+          {entries &&
+            entries.map((entry, idx) => (
+              <EntryItem key={idx} entry={entry} onDelete={handleDeleteEntry} />
+            ))}
+        </tbody>
+      </table>
     </main>
   );
 }
